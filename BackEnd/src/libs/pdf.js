@@ -1,4 +1,3 @@
-// lib/pdf.js
 import PDFDocument from 'pdfkit';
 
 export const crearDocumentoPDF = (pedido) => {

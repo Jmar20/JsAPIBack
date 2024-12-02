@@ -1,6 +1,5 @@
-import PDFDocument from 'pdfkit';
 import Pedido from '../models/pedido.models.js';
-import { crearDocumentoPDF } from '../lib/pdf.js';
+import { crearDocumentoPDF } from '../libs/pdf.js';
 
 // Crear un nuevo pedido
 export const createPedido = async (req, res) => {
@@ -102,6 +101,7 @@ export const searchPedidosByRuc = async (req, res) => {
     }
 };
 
+
 // Generar un PDF de un pedido por ID
 export const generatePedidoPDF = async (req, res) => {
     try {
@@ -113,7 +113,6 @@ export const generatePedidoPDF = async (req, res) => {
         // Crear un nuevo documento PDF usando la función de la librería
         const doc = crearDocumentoPDF(pedido);
 
-        // Configurar la respuesta para entregar un archivo PDF
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename=pedido-${pedido.idPedido}.pdf`);
 
