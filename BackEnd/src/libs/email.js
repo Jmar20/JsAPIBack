@@ -1,4 +1,3 @@
-// libs/email.js
 import nodemailer from 'nodemailer';
 
 export function generarClaveAcceso() {

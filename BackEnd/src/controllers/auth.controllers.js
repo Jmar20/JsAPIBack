@@ -1,6 +1,7 @@
 import Auth from '../models/auth.models.js'
 import { createAccessToken } from '../libs/jwt.js'
 import bcrypt from 'bcrypt'
+
 import { generarClaveAcceso, enviarCorreo } from '../libs/email.js';
 
 export const register = async (req, res) => {
