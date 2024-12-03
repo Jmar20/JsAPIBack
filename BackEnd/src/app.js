@@ -19,6 +19,8 @@ app.use(cookieParser());
 app.use(cors({
     origin: 'http://localhost:5173', // Acepta solo solicitudes desde este dominio
     credentials: true,  // Permite el uso de cookies y credenciales
+    sameSite: 'none' // Permitir el uso de cookies en solicitudes entre diferentes orígenes
+
 }));
 
 // Middleware para registrar solicitudes
