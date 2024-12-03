@@ -45,15 +45,18 @@ export const login = async (req, res) => {
 
         const token = await createAccessToken({ id: userFound._id });
         res.cookie("token", token);
+
         res.json({
             id: userFound._id,
             email: userFound.email,
+            token,
             createdAt: userFound.createdAt,
             updatedAt: userFound.updatedAt
         });
 
     } catch (error) {
         console.log(error);
+        res.status(500).json({ message: "Error interno del servidor" });
     }
 }
 
