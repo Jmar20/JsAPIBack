@@ -15,9 +15,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
 
-// Configuración de CORS para permitir solicitudes desde cualquier origen
+// Configuración de CORS para permitir solicitudes desde un origen específico
 app.use(cors({
-    origin: '*',  // Permite solicitudes de cualquier origen
+    origin: 'http://localhost:5173', // Acepta solo solicitudes desde este dominio
     credentials: true,  // Permite el uso de cookies y credenciales
 }));
 
