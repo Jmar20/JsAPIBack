@@ -93,10 +93,13 @@ export const solicitarCambioContrasena = async (req, res) => {
 
         const claveAcceso = generarClaveAcceso();
 
+        // Almacena la clave de acceso en el modelo de usuario
+        userFound.claveAcceso = claveAcceso; // Asegúrate de que tu modelo tenga este campo
+        await userFound.save();
+
         await enviarCorreo(email, claveAcceso);
 
         res.json({ message: "Clave de acceso enviada al correo" });
-        // Aquí podrías almacenar la clave de acceso en una sesión de usuario o enviarla al cliente para validación
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Error al solicitar cambio de contraseña" });
