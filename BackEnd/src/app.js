@@ -9,29 +9,35 @@ import mandilRoutes from "./routes/mandil.routes.js";
 import pedidoRoutes from "./routes/pedido.routes.js";
 
 const app = express();
+
+// Configuración de middlewares
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+
+// Configuración de CORS para permitir solicitudes desde cualquier origen
+app.use(cors({
+    origin: '*',  // Permite solicitudes de cualquier origen
+    credentials: true,  // Permite el uso de cookies y credenciales
+}));
+
+// Middleware para registrar solicitudes
 app.use(requestLogger);
+
+// Rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/client', clientRoutes);
 app.use('/api/mandil', mandilRoutes);
 app.use('/api/pedido', pedidoRoutes);
 
-app.use((req, res, next) => {
-    const allowedOrigins = ['http://localhost:5173'];
-
-    const origin = req.headers.origin;
-    if (allowedOrigins.indexOf(origin) > -1 || !origin) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    return next();
+// Ruta principal
+app.get('/', (req, res) => {
+    res.send('<h1>Inicio</h1>');
 });
 
-app.get('/', (reqc, res) => {
-    res.send('<h1> Inicio </h1>');
+// Manejo de rutas no encontradas (opcional)
+app.use((req, res) => {
+    res.status(404).json({ message: 'Ruta no encontrada' });
 });
 
 export default app;
