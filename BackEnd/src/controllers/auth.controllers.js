@@ -1,3 +1,7 @@
+import Auth from '../models/auth.models.js'
+import { createAccessToken } from '../libs/jwt.js'
+import bcrypt from 'bcryptjs'
+
 import { generarClaveAcceso, enviarCorreo } from '../libs/email.js';
 
 export const register = async (req, res) => {
@@ -24,8 +28,7 @@ export const register = async (req, res) => {
             id: authSaved._id,
             email: authSaved.email,
             createdAt: authSaved.createdAt,
-            updatedAt: authSaved.updatedAt,
-            token
+            updatedAt: authSaved.updatedAt
         })
 
     } catch (error) {
@@ -89,39 +92,31 @@ export const solicitarCambioContrasena = async (req, res) => {
 
         const claveAcceso = generarClaveAcceso();
 
-        // Almacena la clave de acceso en el modelo de usuario
-        userFound.claveAcceso = claveAcceso; // Asegúrate de que tu modelo tenga este campo
-        await userFound.save();
-
         await enviarCorreo(email, claveAcceso);
 
         res.json({ message: "Clave de acceso enviada al correo" });
+        // Aquí podrías almacenar la clave de acceso en una sesión de usuario o enviarla al cliente para validación
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Error al solicitar cambio de contraseña" });
     }
 }
+
 export const cambiarContrasena = async (req, res) => {
-    const { email, nuevaContrasena, claveAccesoUserInput } = req.body; // Cambié la variable a claveAccesoUserInput
+    const { email, nuevaContrasena, claveAcceso, claveAccesoUserInput } = req.body;
 
     try {
         const userFound = await Auth.findOne({ email });
 
         if (!userFound) return res.status(400).json({ message: "Usuario no encontrado" });
 
-        // Verifica si la clave de acceso es correcta
-        if (userFound.claveAcceso !== claveAccesoUserInput) {
+        // Verifica la clave de acceso del usuario
+        if (claveAcceso !== claveAccesoUserInput) {
             return res.status(400).json({ message: "Clave de acceso incorrecta" });
         }
 
-        // Si la clave de acceso es válida, cambia la contraseña
         const passHash = await bcrypt.hash(nuevaContrasena, 10);
         userFound.password = passHash;
-
-        // Limpiar la clave de acceso después de usarla
-        userFound.claveAcceso = null; // Limpiar la clave de acceso
-
-        // Guardar el usuario con la nueva contraseña y sin la clave de acceso
         await userFound.save();
 
         res.json({ message: "Contraseña cambiada exitosamente" });
