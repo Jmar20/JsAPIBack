@@ -1,6 +1,6 @@
 import Auth from '../models/auth.models.js'
 import { createAccessToken } from '../libs/jwt.js'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 import { generarClaveAcceso, enviarCorreo } from '../libs/email.js';
 
