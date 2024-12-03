@@ -9,8 +9,8 @@ router.post('/register', validateAuth, register);
 router.post('/login', validateAuth, login);
 router.post('/logout', logout);
 
-router.post('/solicitar-cambio-contrasena', solicitarCambioContrasena);
+router.post('/solicitarCambioContrasena', solicitarCambioContrasena);
 
-router.post('/cambiar-contrasena', cambiarContrasena);
+router.post('/cambiarContrasena', cambiarContrasena);
 
 export default router;
