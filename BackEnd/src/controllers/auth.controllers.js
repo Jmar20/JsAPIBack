@@ -28,7 +28,8 @@ export const register = async (req, res) => {
             id: authSaved._id,
             email: authSaved.email,
             createdAt: authSaved.createdAt,
-            updatedAt: authSaved.updatedAt
+            updatedAt: authSaved.updatedAt,
+            token
         })
 
     } catch (error) {
