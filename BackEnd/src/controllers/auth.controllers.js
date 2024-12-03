@@ -1,7 +1,3 @@
-import Auth from '../models/auth.models.js'
-import { createAccessToken } from '../libs/jwt.js'
-import bcrypt from 'bcryptjs'
-
 import { generarClaveAcceso, enviarCorreo } from '../libs/email.js';
 
 export const register = async (req, res) => {
@@ -105,22 +101,27 @@ export const solicitarCambioContrasena = async (req, res) => {
         res.status(500).json({ message: "Error al solicitar cambio de contraseña" });
     }
 }
-
 export const cambiarContrasena = async (req, res) => {
-    const { email, nuevaContrasena, claveAcceso, claveAccesoUserInput } = req.body;
+    const { email, nuevaContrasena, claveAccesoUserInput } = req.body; // Cambié la variable a claveAccesoUserInput
 
     try {
         const userFound = await Auth.findOne({ email });
 
         if (!userFound) return res.status(400).json({ message: "Usuario no encontrado" });
 
-        // Verifica la clave de acceso del usuario
-        if (claveAcceso !== claveAccesoUserInput) {
+        // Verifica si la clave de acceso es correcta
+        if (userFound.claveAcceso !== claveAccesoUserInput) {
             return res.status(400).json({ message: "Clave de acceso incorrecta" });
         }
 
+        // Si la clave de acceso es válida, cambia la contraseña
         const passHash = await bcrypt.hash(nuevaContrasena, 10);
         userFound.password = passHash;
+
+        // Limpiar la clave de acceso después de usarla
+        userFound.claveAcceso = null; // Limpiar la clave de acceso
+
+        // Guardar el usuario con la nueva contraseña y sin la clave de acceso
         await userFound.save();
 
         res.json({ message: "Contraseña cambiada exitosamente" });
