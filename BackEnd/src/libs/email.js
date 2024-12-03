@@ -1,7 +1,14 @@
 import nodemailer from 'nodemailer';
 
-export function generarClaveAcceso() {
-    return Math.floor(1000 + Math.random() * 9000).toString();
+// Función para generar una contraseña aleatoria
+export function generarClaveAcceso(longitud = 12) {
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+    let clave = '';
+    for (let i = 0; i < longitud; i++) {
+        const indice = Math.floor(Math.random() * caracteres.length);
+        clave += caracteres[indice];
+    }
+    return clave;
 }
 
 // Función para enviar un correo con la clave de acceso
@@ -11,7 +18,7 @@ export async function enviarCorreo(email, claveAcceso) {
             service: 'gmail',
             auth: {
                 user: 'cesargabrieltorresflorez@gmail.com',
-                pass: 'dayk zwjk ugsj ygem'
+                pass: 'dayk zwjk ugsj ygem' // Asegúrate de no exponer tu contraseña en el código
             }
         });
 
