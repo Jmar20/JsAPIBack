@@ -1,0 +1,93 @@
+/* Aplica el fondo celeste a todo el body */
+.body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Ocupa todo el alto de la ventana */
+  background-color: #b3d9ff; /* Fondo celeste */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+/* Contenedor principal del login */
+.login-container {
+  background-color: #ffffff; /* Fondo blanco para el contenedor */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+  max-width: 400px; /* Limita el ancho máximo del contenedor */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilo para la imagen */
+.login-logo {
+  max-width: 100px; /* Tamaño máximo de la imagen */
+  height: auto; /* Mantiene la proporción de la imagen */
+  margin-bottom: 20px; /* Espaciado debajo de la imagen */
+}
+
+/* Encabezado del formulario */
+.login-header {
+  text-align: center;
+  margin-bottom: 20px; /* Espaciado debajo del encabezado */
+}
+
+/* Título del formulario */
+h2 {
+  margin: 0;
+  font-size: 24px; /* Tamaño de fuente para el título */
+  color: #283593; /* Color de texto para el título */
+  font-weight: bold;
+}
+
+/* Estilo para los campos del formulario */
+mat-form-field {
+  width: 100%; /* Hace que los campos ocupen todo el ancho del contenedor */
+  margin-bottom: 16px; /* Espaciado entre los campos */
+}
+
+/* Estilo para los botones */
+button {
+  width: 100%; /* Hace que el botón ocupe todo el ancho del contenedor */
+  padding: 10px; /* Espaciado interno del botón */
+  font-size: 16px; /* Tamaño de fuente para el botón */
+  background-color: #3f51b5; /* Color principal del botón */
+  color: #fff; /* Color del texto del botón */
+  border: none;
+  border-radius: 8px; /* Bordes redondeados del botón */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Efecto de transición de color */
+}
+
+/* Efectos de hover y active para el botón */
+button:hover {
+  background-color: #303f9f; /* Color más oscuro en hover */
+}
+
+button:active {
+  background-color: #283593; /* Efecto de presionado */
+}
+
+/* Estilo de los campos de entrada */
+mat-form-field input {
+  font-size: 16px; /* Tamaño de fuente en los campos */
+}
+
+/* Respuesta móvil */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 22px; /* Tamaño de fuente más pequeño en móvil */
+  }
+
+  button {
+    font-size: 14px; /* Fuente más pequeña en móvil */
+    padding: 8px; /* Espaciado interno reducido */
+  }
+}
